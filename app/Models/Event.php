@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Event extends Model
 {
@@ -32,5 +33,9 @@ class Event extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function scopeUpcoming(Builder $query): void {
+        $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
     }
 }
