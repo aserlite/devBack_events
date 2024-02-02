@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import { EventModel, CategoryModel } from "../types";
 import { CalendarFold, User } from "lucide-vue-next";
 import EventCard from "../Components/ui/EventCard.vue";
+import CategoryCard from "../Components/ui/CategoryCard.vue";
 
 defineProps<{
     canLogin: boolean;
@@ -41,22 +42,11 @@ defineProps<{
         </h2>
 
         <div class="grid grid-cols-5 gap-4">
-            <div
+            <CategoryCard
                 v-for="category in popularCategories"
                 :key="category.id"
-                class="flex flex-col justify-between gap-4 rounded-md border border-solid border-zinc-300 p-4 shadow hover:scale-110"
-            >
-                <h3 class="text-center text-xl font-bold">
-                    {{ category.name }}
-                </h3>
-
-                <p class="inline-flex flex-col gap-2 text-center">
-                    <span class="text-4xl font-black">
-                        {{ category.events_count }}
-                    </span>
-                    évènement{{ category.events_count > 1 ? "s" : "" }}
-                </p>
-            </div>
+                :category="category"
+            />
         </div>
     </div>
 </template>

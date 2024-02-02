@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
     <div
-        class="flex flex-col justify-between rounded-md border border-solid border-zinc-300 p-4 shadow"
+        class="flex flex-col justify-between rounded-md border border-solid border-zinc-300 p-4 shadow transition-transform hover:scale-110"
     >
         <div>
             <!-- Most important informations -->
