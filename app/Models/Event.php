@@ -38,4 +38,12 @@ class Event extends Model
     public function scopeUpcoming(Builder $query): void {
         $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
     }
+
+    public function scopeUpcoming(Builder $query): void {
+        $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
+    }
+
+    public function scopeUpcoming(Builder $query): void {
+        $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
+    }
 }

@@ -7,9 +7,11 @@ import { EventModel } from "../../types";
 import Button from "../../Components/Button.vue";
 
 dayjs.locale("fr");
-
 defineProps<{
     event: EventModel;
+    storage_path: string;
+    participating: boolean;
+    nb_participants: bigint;
 }>();
 </script>
 
@@ -21,10 +23,10 @@ defineProps<{
             v-else
             class="container mx-auto mt-8 grid grid-cols-1 gap-4 md:grid-cols-2"
         >
-            <div class="aspect-square w-full bg-zinc-500"></div>
-            <!-- <img src="./" class="" alt="" /> -->
 
+            <img :src="'/storage/' + event.image " class="w-full aspect-square bg-zinc-500" alt="" />
             <div class="flex flex-col gap-4">
+                <h3 class="text-xl text-slate-500	">{{ nb_participants }} participants</h3>
                 <h1 class="text-4xl font-bold">{{ event.title }}</h1>
                 <p class="text-2xl font-bold">{{ event.price }}€</p>
                 <p class="text-gray-500">{{ event.description }}</p>
@@ -47,7 +49,7 @@ defineProps<{
                 </div>
             </div>
         </div>
-
-        <pre>{{ JSON.stringify(event, null, 2) }}</pre>
+        <a :href='"/events/"+event.id+"/participate"' v-if="participating == false" class="bg-blue-500 text-white">Participer</a>
+        <a :href='"/events/"+event.id+"/participate"' v-else class="bg-gray-500 text-white">Je ne participe plus</a>
     </AppLayout>
 </template>
