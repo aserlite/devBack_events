@@ -34,5 +34,6 @@ Route::middleware([
     })->name('dashboard');
     Route::get('/events', \App\Http\Controllers\ListEventsController::class)->name('events');
     Route::get('/events/{event}', \App\Http\Controllers\ShowEventController::class)->name('events.show');
+    Route::get('/events/{event}/participate', \App\Http\Controllers\ParticipateController::class);
 });
 

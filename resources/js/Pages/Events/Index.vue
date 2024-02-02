@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
     events: Array,
+    storage_path: '',
 })
 
 </script>
@@ -11,11 +12,7 @@ defineProps({
     <AppLayout title="Events">
          <div class="grid grid-cols-3 gap-8">
                 <a v-for="event in events" :key="event.id" :href="route('events.show',event)" class="block rounded-lg p-4 shadow-sm shadow-indigo-100">
-                    <img
-                        alt="Home"
-                        src="https://images.unsplash.com/photo-1613545325278-f24b0cae1224?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                        class="h-56 w-full rounded-md object-cover"
-                    />
+                    <img :src="'/storage/' + event.image "  class="h-56 w-full rounded-md object-cover"/>
 
                     <div class="mt-2">
                         <dl>

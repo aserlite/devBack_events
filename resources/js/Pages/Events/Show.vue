@@ -5,10 +5,11 @@ import "dayjs/locale/fr"
 import { CalendarFold , MapPinned } from "lucide-vue-next";
 import Button from "../../Components/Button.vue";
 
-
 dayjs.locale("fr")
-
 defineProps<{
+    storage_path: '',
+    participating: boolean,
+    nb_participants: bigint,
     event: {
         id: number;
         title: string;
@@ -18,12 +19,12 @@ defineProps<{
         location: string;
         capacity: number;
         price: number;
+        image:string;
         created_at: string;
         updated_at: string;
     };
 }>(
 );
-
 </script>
 
 <template>
@@ -33,10 +34,10 @@ defineProps<{
         </div>
 
         <div v-else class="mx-auto container mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="w-full aspect-square bg-zinc-500"></div>
-            <!-- <img src="./" class="" alt="" /> -->
 
+            <img :src="'/storage/' + event.image " class="w-full aspect-square bg-zinc-500" alt="" />
             <div>
+                <h3 class="text-xl text-slate-500	">{{ nb_participants }} participants</h3>
                 <h1 class="text-4xl font-bold">{{ event.title }}</h1>
                 <p class="text-gray-500">{{ event.description }}</p>
                 <p
@@ -55,9 +56,9 @@ defineProps<{
             </div>
 
         </div>
-            <Button  variant="primary">hello</Button>
+            <Button variant="secondary">Participer</Button>
 
-            <pre>{{ JSON.stringify(event, null, 2) }}</pre>
-
+        <a :href='"/events/"+event.id+"/participate"' v-if="participating == false" class="bg-blue-500 text-white">Participer</a>
+        <a :href='"/events/"+event.id+"/participate"' v-else class="bg-gray-500 text-white">Je ne participe plus</a>
     </AppLayout>
 </template>
