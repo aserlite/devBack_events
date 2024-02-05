@@ -17,7 +17,8 @@ class Event extends Model
         'end_date',
         'location',
         'capacity',
-        'price'
+        'price',
+        'image'
     ];
 
     public function setPriceAttribute($value)
@@ -39,11 +40,8 @@ class Event extends Model
         $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
     }
 
-    public function scopeUpcoming(Builder $query): void {
-        $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
-    }
-
-    public function scopeUpcoming(Builder $query): void {
-        $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
+    public function participate()
+    {
+        return $this->belongsToMany(User::class,  'participants');
     }
 }

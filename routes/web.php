@@ -6,6 +6,17 @@ use Inertia\Inertia;
 use App\Models\Event;
 use App\Http\Controllers\WelcomeController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
 Route::get('/', WelcomeController::class);
 
 Route::middleware([
@@ -18,5 +29,6 @@ Route::middleware([
     })->name('dashboard');
     Route::get('/events', \App\Http\Controllers\ListEventsController::class)->name('events');
     Route::get('/events/{event}', \App\Http\Controllers\ShowEventController::class)->name('events.show');
+    Route::get('/events/{event}/participate', \App\Http\Controllers\ParticipateController::class);
 });
 
