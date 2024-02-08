@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-    <div
+    <a :key="event.id" :href="route('events.show',event)"
         class="flex flex-col justify-between rounded-md border border-solid border-zinc-300 p-4 shadow transition-transform hover:scale-110"
     >
         <div>
@@ -42,5 +42,5 @@ defineProps<{
             <CalendarFold />
             {{ event.location }}
         </p>
-    </div>
+    </a>
 </template>
