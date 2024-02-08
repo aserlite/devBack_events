@@ -19,6 +19,8 @@ class ShowEventController extends Controller
             'event' => $event,
             'participating' => $event->participate->contains(auth()->id()),
             'nb_participants' => $event->participate->count(),
+            'previousUrl' =>  url()->previous(),
+            'categories' =>  $event->categories,
         ]) ;
     }
 }

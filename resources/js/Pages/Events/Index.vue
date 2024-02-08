@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { useForm } from "@inertiajs/vue3";
+import GuestLayout from "../../Layouts/GuestLayout.vue";
 
 const props = defineProps(['events', 'storage_path']);
 
@@ -36,7 +37,12 @@ const applyFilters = () => {
 </script>
 
 <template>
-    <AppLayout title="Events">
+    <div v-if="$page.props.auth.user">
+        <AppLayout title="Welcome" />
+    </div>
+    <div v-else>
+        <GuestLayout title="Welcome" />
+    </div>
         <form @submit.prevent="applyFilters">
             <div class="mt-4">
                 <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
@@ -142,5 +148,5 @@ const applyFilters = () => {
 
         <Pagination class="mt-6" :links="events.links" />
 
-    </AppLayout>
+
 </template>

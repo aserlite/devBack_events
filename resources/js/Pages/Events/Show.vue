@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import AppLayout from "@/Layouts/AppLayout.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import dayjs from "dayjs";
 import "dayjs/locale/fr"
 import { CalendarFold , MapPinned } from "lucide-vue-next";
 import Button from "../../Components/Button.vue";
+import { Link } from '@inertiajs/vue3'
 
 dayjs.locale("fr")
-defineProps<{
+let props = defineProps<{
     storage_path: '',
     participating: boolean,
     nb_participants: bigint,
+    previousUrl: string,
+    categories: object,
     event: {
         id: number;
         title: string;
@@ -25,11 +29,20 @@ defineProps<{
     };
 }>(
 );
+
 </script>
 
 <template>
-    <AppLayout title="Events.show">
-        <div v-if="!event">
+    <div v-if="$page.props.auth.user">
+        <AppLayout title="Welcome" />
+    </div>
+    <div v-else>
+        <GuestLayout title="Welcome" />
+    </div>
+
+    <Link :href="$page.props.previousUrl" class="">Back</Link>
+
+    <div v-if="!event">
             Aucun évènement trouvé.
         </div>
 
@@ -37,8 +50,19 @@ defineProps<{
 
             <img :src="'/storage/' + event.image " class="w-full aspect-square bg-zinc-500" alt="" />
             <div>
-                <h3 class="text-xl text-slate-500	">{{ nb_participants }} participants</h3>
+                <div class="flex justify-between">
+                    <h3 class="text-xl text-slate-500	">{{ nb_participants }} participants</h3>
+                    <a :href='"/events/"+event.id+"/participate"' v-if="participating == false" class="bg-blue-500 text-white">Participer</a>
+                    <a :href='"/events/"+event.id+"/participate"' v-else class="bg-gray-500 text-white">Je ne participe plus</a>
+                </div>
                 <h1 class="text-4xl font-bold">{{ event.title }}</h1>
+                <div v-for="category in categories">
+                    <a
+                        :href="'/events?category='+category.name"
+                        class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                        {{category.name}}
+                    </a>
+                </div>
                 <p class="text-gray-500">{{ event.description }}</p>
                 <p
                     class="inline-flex items-center gap-4 font-bold text-blue-700 rounded-full px-4 py-1.5 bg-blue-100 w-max border-2 border-blue-700"
@@ -58,7 +82,4 @@ defineProps<{
         </div>
         <Button variant="secondary">Participer</Button>
 
-        <a :href='"/events/"+event.id+"/participate"' v-if="participating == false" class="bg-blue-500 text-white">Participer</a>
-        <a :href='"/events/"+event.id+"/participate"' v-else class="bg-gray-500 text-white">Je ne participe plus</a>
-    </AppLayout>
 </template>

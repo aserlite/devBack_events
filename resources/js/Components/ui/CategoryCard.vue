@@ -4,10 +4,13 @@ import { CategoryModel } from "../../types";
 defineProps<{
     category: CategoryModel;
 }>();
+
+
 </script>
 
 <template>
-    <div
+    <a
+        :href="'/events?category='+category.name"
         class="flex flex-col justify-between gap-4 rounded-md border border-solid border-zinc-300 p-4 shadow transition-transform hover:scale-110"
     >
         <h3 class="text-center text-xl font-bold">
@@ -20,5 +23,5 @@ defineProps<{
             </span>
             évènement{{ category.events_count > 1 ? "s" : "" }}
         </p>
-    </div>
+    </a>
 </template>
