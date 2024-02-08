@@ -12,7 +12,7 @@ class ListEventsController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $events = Event::all();
+        $events = Event::paginate(12);
         return Inertia::render('Events/Index', [
             'storage_path' => Storage::disk('public')->url(''),
             'events' => $events,
