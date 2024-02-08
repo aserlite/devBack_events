@@ -56,7 +56,7 @@ class ListEventsController extends Controller
             default:
         }
 
-        $events = $eventsQuery->paginate(12);
+        $events = $eventsQuery->paginate(12)->appends(request()->query());
 
         return Inertia::render('Events/Index', [
             'storage_path' => Storage::disk('public')->url(''),
