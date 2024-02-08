@@ -37,6 +37,7 @@ class Event extends Model
     }
 
     public function scopeUpcoming(Builder $query): void {
+        // WARN we should change the "<=" to ">=" to get the upcoming events
         $query->where('start_date', '<=', now())->orderBy('start_date', 'asc')->limit(5);
     }
 
