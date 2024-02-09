@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import AppLayout from "@/Layouts/AppLayout.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import Comment from "@/Components/Comment.vue";
+import CommentForm from "@/Components/CommentForm.vue";
 import dayjs from "dayjs";
 import "dayjs/locale/fr"
 import { CalendarFold , MapPinned } from "lucide-vue-next";
 import Button from "../../Components/Button.vue";
 import { Link } from '@inertiajs/vue3'
+import EventCard from "../../Components/ui/EventCard.vue";
 
 dayjs.locale("fr")
 let props = defineProps<{
@@ -14,6 +17,10 @@ let props = defineProps<{
     nb_participants: bigint,
     previousUrl: string,
     categories: object,
+    comments: object,
+    outdated: boolean,
+    sameLocation: object,
+    sameCategory: object,
     event: {
         id: number;
         title: string;
@@ -29,7 +36,7 @@ let props = defineProps<{
     };
 }>(
 );
-
+console.log(props.sameLocation.length)
 </script>
 
 <template>
@@ -81,5 +88,41 @@ let props = defineProps<{
 
         </div>
         <Button variant="secondary">Participer</Button>
+
+    <div class="container mx-auto flex flex-col gap-4 py-32" v-if="sameLocation.length">
+        <h2 class="text-center text-4xl font-bold text-zinc-700">
+            Nos évènements dans la meme ville
+        </h2>
+
+        <div class="grid grid-cols-5 gap-4">
+            <template v-for="event in sameLocation" :key="event.id">
+                <EventCard :event="event" />
+            </template>
+        </div>
+    </div>
+
+    <div class="container mx-auto flex flex-col gap-4 py-32" v-if="sameCategory.length">
+        <h2 class="text-center text-4xl font-bold text-zinc-700">
+            Nos évènements similaires
+        </h2>
+
+        <div class="grid grid-cols-5 gap-4">
+            <template v-for="event in sameCategory" :key="event.id">
+                <EventCard :event="event" />
+            </template>
+        </div>
+    </div>
+
+<div v-if="outdated">
+    <div v-if="comments.length > 0">
+        <h2 class="text-2xl font-semibold mt-8">Comments</h2>
+        <Comment v-for="comment in comments" :key="comment.id" :comment="comment" />
+    </div>
+
+    <div v-if="$page.props.auth.user">
+        <h2 class="text-2xl font-semibold mt-8">Add a Comment</h2>
+        <CommentForm :eventId="event.id" />
+    </div>
+</div>
 
 </template>

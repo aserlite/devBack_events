@@ -30,5 +30,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/events/{event}/participate', \App\Http\Controllers\ParticipateController::class);
+    Route::post('/events/{eventId}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+
 });
 
