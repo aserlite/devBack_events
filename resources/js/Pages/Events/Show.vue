@@ -14,6 +14,7 @@ dayjs.locale("fr")
 let props = defineProps<{
     storage_path: '',
     participating: boolean,
+    is_admin: boolean,
     nb_participants: bigint,
     previousUrl: string,
     categories: object,
@@ -36,7 +37,6 @@ let props = defineProps<{
     };
 }>(
 );
-console.log(props.sameLocation.length)
 </script>
 
 <template>
@@ -59,8 +59,13 @@ console.log(props.sameLocation.length)
             <div>
                 <div class="flex justify-between">
                     <h3 class="text-xl text-slate-500	">{{ nb_participants }} participants</h3>
-                    <a :href='"/events/"+event.id+"/participate"' v-if="participating == false" class="bg-blue-500 text-white">Participer</a>
-                    <a :href='"/events/"+event.id+"/participate"' v-else class="bg-gray-500 text-white">Je ne participe plus</a>
+                    <div v-if="!is_admin">
+                        <a :href='"/events/"+event.id+"/participate"' v-if="participating == false" class="bg-blue-500 text-white">Participer</a>
+                        <a :href='"/events/"+event.id+"/participate"' v-else class="bg-gray-500 text-white">Je ne participe plus</a>
+                    </div>
+                    <div v-else>
+                        <a :href="'/admin/events/'+event.id+'/edit'" class="bg-blue-500 text-white">Editer cet évement</a>
+                    </div>
                 </div>
                 <h1 class="text-4xl font-bold">{{ event.title }}</h1>
                 <div v-for="category in categories">

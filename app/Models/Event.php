@@ -43,7 +43,7 @@ class Event extends Model
 
     public function participate()
     {
-        return $this->belongsToMany(User::class,  'participants');
+        return $this->belongsToMany(User::class,  'participants')->withPivot('is_admin');
     }
 
     public function comment()

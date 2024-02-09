@@ -21,10 +21,13 @@ class ShowEventController extends Controller
             ->where('id', '!=', $event->id)
             ->take(5)
             ->get();
+
+        $participation = $event->participate()->where('user_id', auth()->id())->first();
         return Inertia::render('Events/Show', [
             'storage_path' => Storage::disk('public')->url(''),
             'event' => $event,
             'participating' => $event->participate->contains(auth()->id()),
+            'is_admin' => $participation ? $participation->pivot->is_admin : false,
             'nb_participants' => $event->participate->count(),
             'previousUrl' =>  url()->previous(),
             'categories' =>  $event->categories,
@@ -32,6 +35,7 @@ class ShowEventController extends Controller
             'outdated' => now()->greaterThan($event->end_date),
             'sameLocation' => $sameLocation,
             'sameCategory' => $sameCategory,
-        ]) ;
+        ]);
     }
+
 }
