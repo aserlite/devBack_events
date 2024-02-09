@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Avis as AppComment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,5 +63,9 @@ class User extends Authenticatable
     public function events()
     {
         return $this->belongsToMany(Event::class, 'participants');
+    }
+    public function comment()
+    {
+        return $this->hasMany(AppComment::class); // Use the alias
     }
 }
