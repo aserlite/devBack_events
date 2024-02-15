@@ -2,13 +2,85 @@
 import { ref, onMounted } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
+import { useForm } from "@inertiajs/vue3";
+import GuestLayout from "../../Layouts/GuestLayout.vue";
 
 const props = defineProps(['events', 'storage_path']);
+
+const urlSearchParams = new URLSearchParams(window.location.search);
+const location = ref(urlSearchParams.get('location'));
+const category = ref(urlSearchParams.get('category'));
+const orderBy = ref(urlSearchParams.get('order_by'));
+const startDate = ref(urlSearchParams.get('start_date'));
+const maxPrice = ref(urlSearchParams.get('max_price'));
+
+const form = useForm({
+    location: location.value,
+    category: category.value,
+    order_by: orderBy.value,
+    start_date: startDate.value,
+    max_price: maxPrice.value,
+});
+
+const applyFilters = () => {
+    const routeParams = {
+        location: form.location,
+        category: form.category,
+        order_by: form.order_by,
+        start_date: form.start_date,
+        max_price: form.max_price,
+    };
+
+    form.get(route('events'), routeParams);
+};
 
 </script>
 
 <template>
-    <AppLayout title="Events">
+    <div v-if="$page.props.auth.user">
+        <AppLayout title="Welcome" />
+    </div>
+    <div v-else>
+        <GuestLayout title="Welcome" />
+    </div>
+        <form @submit.prevent="applyFilters">
+            <div class="mt-4">
+                <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
+                <input v-model="form.location" type="text" id="location" name="location" class="mt-1 p-2 border rounded-md">
+            </div>
+
+            <div class="mt-4">
+                <label for="category" class="block text-sm font-medium text-gray-700">Category:</label>
+                <input v-model="form.category" type="text" id="category" name="category" class="mt-1 p-2 border rounded-md">
+            </div>
+
+            <div class="mt-4">
+                <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date:</label>
+                <input v-model="form.start_date" type="date" id="startDate" name="startDate" class="mt-1 p-2 border rounded-md">
+            </div>
+
+            <div class="mt-4">
+                <label for="maxPrice" class="block text-sm font-medium text-gray-700">Max Price: {{form.max_price}}</label>
+                <input v-model="form.max_price" type="range" id="maxPrice" name="maxPrice" class="mt-1 p-2 border rounded-md" min="0" max="1000">
+            </div>
+
+            <div class="mt-4">
+                <label for="orderBy" class="block text-sm font-medium text-gray-700">Order By:</label>
+                <select v-model="form.order_by" id="orderBy" name="orderBy" class="mt-1 p-2 border rounded-md">
+                    <option value="default">Default</option>
+                    <option value="price_asc">Price Ascending</option>
+                    <option value="price_desc">Price Descending</option>
+                    <option value="location">Location</option>
+                    <option value="start_date_asc">Start Date Ascending</option>
+                    <option value="start_date_desc">Start Date Descending</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md">Apply Filters</button>
+            </div>
+        </form>
+
         <div class="grid grid-cols-3 gap-8">
             <a v-for="event in events.data" :key="event.id" :href="route('events.show', event)"
                class="block rounded-lg p-4 shadow-sm shadow-indigo-100">
@@ -76,5 +148,5 @@ const props = defineProps(['events', 'storage_path']);
 
         <Pagination class="mt-6" :links="events.links" />
 
-    </AppLayout>
+
 </template>

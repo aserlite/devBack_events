@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\Avis as AppComment; // Alias the Comment class
 
 class Event extends Model
 {
@@ -43,6 +44,11 @@ class Event extends Model
 
     public function participate()
     {
-        return $this->belongsToMany(User::class,  'participants');
+        return $this->belongsToMany(User::class,  'participants')->withPivot('is_admin');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(AppComment::class); // Use the alias
     }
 }

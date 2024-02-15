@@ -14,11 +14,28 @@ class ShowEventController extends Controller
      */
     public function __invoke(Request $request, Event $event)
     {
+        $sameLocation = Event::where('location', $event->location)->where('id','!=',$event->id)->take(5)->get();
+        $sameCategory = Event::whereHas('categories', function ($query) use ($event) {
+            $query->whereIn('categories.id', $event->categories->pluck('id'));
+        })
+            ->where('id', '!=', $event->id)
+            ->take(5)
+            ->get();
+
+        $participation = $event->participate()->where('user_id', auth()->id())->first();
         return Inertia::render('Events/Show', [
             'storage_path' => Storage::disk('public')->url(''),
             'event' => $event,
             'participating' => $event->participate->contains(auth()->id()),
+            'is_admin' => $participation ? $participation->pivot->is_admin : false,
             'nb_participants' => $event->participate->count(),
-        ]) ;
+            'previousUrl' =>  url()->previous(),
+            'categories' =>  $event->categories,
+            'comments' => $event->comment,
+            'outdated' => now()->greaterThan($event->end_date),
+            'sameLocation' => $sameLocation,
+            'sameCategory' => $sameCategory,
+        ]);
     }
+
 }

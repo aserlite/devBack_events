@@ -54,7 +54,11 @@ class EventResource extends Resource
                     ->preload(),
                 FileUpload::make('image')
                     ->required()
-                    ->image()
+                    ->image(),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('participants', 'user_id')
+                    ->hidden(true)
+                    ->default(auth()->id()),
             ]);
     }
 
