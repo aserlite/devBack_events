@@ -4,10 +4,11 @@ namespace App\Mail;
 
 use App\Models\Event;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EventReminderMail extends Mailable
+class EventSubscriptionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,6 +21,6 @@ class EventReminderMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Event Reminder')->view('emails.event-reminder', ['event' => $this->event]);
+        return $this->subject('Event Subscription')->view('emails.event-subscription', ['event' => $this->event]);
     }
 }

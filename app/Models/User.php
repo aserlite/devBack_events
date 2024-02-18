@@ -83,7 +83,7 @@ class User extends Authenticatable implements FilamentUser
             return true;
         }
 
-        if($url == str_contains($url, '/admin/events/create' && auth()->id())){
+        if($url == str_contains($url, '/admin/events/create') && auth()->id()){
             return true;
         }
 
