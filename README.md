@@ -1,3 +1,14 @@
+# Projet
+- Leblond Romain
+- Cuvillon Arthur
+
+Notre projet est normalement complet, le seul point manquant étant la gestion de l'administration selon si l'utilisateur est admin de l'event ou pas qui marche a moitié (pop up bloquante affichant une erreur 403), l'admin est accessible a toutes les adresses mail @gmail.com
+### Voici des screens des pages: 
+
+<img src="https://cdn.discordapp.com/attachments/977904279559999539/1208896222266654731/screencapture-127-0-0-1-8000-2024-02-18-22_58_17.png?ex=65e4f357&is=65d27e57&hm=2c182f3470d922f397493a2b44213abe9c10b368759db11bc78c38f88ccdb855&">
+<img src="https://cdn.discordapp.com/attachments/977904279559999539/1208896222694342766/screencapture-127-0-0-1-8000-events-2024-02-18-22_59_11.png?ex=65e4f357&is=65d27e57&hm=02b651978bfc5d70af69290221788cc9e2f365368e782054b225d456cadd72bf&">
+<img src="https://cdn.discordapp.com/attachments/977904279559999539/1208896223147466783/screencapture-127-0-0-1-8000-events-55-2024-02-18-22_59_24.png?ex=65e4f357&is=65d27e57&hm=f5a6d6a3cbe9a5a1c8378f67ae3d4931c43997d58c275e7a8b107cc0193ff5cf&">
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 # Installation
